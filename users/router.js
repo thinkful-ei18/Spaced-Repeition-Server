@@ -9,7 +9,6 @@ const router = express.Router();
 const jsonParser = bodyParser.json();
 
 router.post('/', jsonParser, (req, res) => {
-  console.log('legeo');
   const requiredFields = ['username', 'password'];
   const missingField = requiredFields.find(field => !(field in req.body));
 
