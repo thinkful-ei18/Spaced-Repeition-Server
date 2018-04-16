@@ -13,6 +13,12 @@ const userSchema = mongoose.Schema({
   password:{
     type: String,
     required: true
+  },
+  firstName:{
+    type:String
+  },
+  lastName:{
+    type:String
   }
 });
 
@@ -27,6 +33,8 @@ userSchema.statics.hashPasword = function (password){
 userSchema.methods.serialize = function(){
   return{
     username: this.username || '',
+    firstName: this.firstName || '',
+    lastName: this.lastName || ''
   };
 };
 
