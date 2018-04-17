@@ -48,7 +48,8 @@ app.get('/api/dash/question', jwtAuth, (req, res, next) => {
   User.findById(req.user.id)
     .select('questions')
     .then((questions) => {
-      res.json(questions[0]);
+      console.log(questions.questions[0]);
+      res.json(questions.questions[0]);
     });
 
 });
