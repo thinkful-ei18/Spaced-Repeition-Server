@@ -25,6 +25,7 @@ app.use(
     origin: CLIENT_ORIGIN
   })
 );
+// move me down, un auth for development purpouses.
 app.use('/api/questions', questionRouter);
 
 passport.use(localStrategy);

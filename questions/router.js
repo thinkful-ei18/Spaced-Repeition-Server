@@ -15,7 +15,11 @@ const router = express.Router();
 //     });
 // });
 
-  router.get('/', (req, res) => {
-
-  })
+router.get('/', (req, res, next) => {
+  Question.find({})
+    .then((questions) => {
+      res.json(questions);
+    })
+    .catch(next);
+});
 module.exports = { router };
