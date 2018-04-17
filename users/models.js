@@ -8,33 +8,36 @@ const userSchema = mongoose.Schema({
   username: {
     type: String,
     required: true,
-    unique:true
+    unique: true,
   },
-  password:{
+  password: {
     type: String,
-    required: true
+    required: true,
   },
-  firstName:{
-    type:String
+  firstName: {
+    type: String,
   },
-  lastName:{
-    type:String
-  }
+  lastName: {
+    type: String,
+  },
+  questions: {
+    type: Array,
+  },
 });
 
-userSchema.methods.validatePassword = function (password){
+userSchema.methods.validatePassword = function(password) {
   return bcrypt.compare(password, this.password);
 };
 
-userSchema.statics.hashPasword = function (password){
-  return bcrypt.hash(password,10);
+userSchema.statics.hashPasword = function(password) {
+  return bcrypt.hash(password, 10);
 };
 
-userSchema.methods.serialize = function(){
-  return{
+userSchema.methods.serialize = function() {
+  return {
     username: this.username || '',
     firstName: this.firstName || '',
-    lastName: this.lastName || ''
+    lastName: this.lastName || '',
   };
 };
 

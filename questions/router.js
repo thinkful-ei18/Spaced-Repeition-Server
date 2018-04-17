@@ -5,7 +5,7 @@ const seedData = require('../mockData/mockWords.json');
 
 const router = express.Router();
 
-// router.get('/seed',(req, res) => {
+// router.get('/seed', (req, res) => {
 //   return Question.insertMany(seedData)
 //     .then(() => {
 //       return res.status(200);
@@ -17,7 +17,7 @@ const router = express.Router();
 
 router.get('/', (req, res, next) => {
   Question.find({})
-    .then((questions) => {
+    .then(questions => {
       res.json(questions);
     })
     .catch(next);
