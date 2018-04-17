@@ -1,6 +1,6 @@
 'use strict';
 const express = require('express');
-const Question = require('./model.js');
+const { Question } = require('./model.js');
 const seedData = require('../mockData/mockWords.json');
 
 const router = express.Router();
@@ -22,4 +22,6 @@ router.get('/', (req, res, next) => {
     })
     .catch(next);
 });
+
+//post put delete ??
 module.exports = { router };

@@ -19,9 +19,13 @@ const userSchema = mongoose.Schema({
   },
   lastName:{
     type:String
-  }
+  },
+  questions:[{}]
+  // questions:[{spanish,english,mvalue,next}]
 });
-
+  //populate
+// user.questions.english = questions.english
+//user.questions.spanish = questions.spanish
 userSchema.methods.validatePassword = function (password){
   return bcrypt.compare(password, this.password);
 };
@@ -37,6 +41,14 @@ userSchema.methods.serialize = function(){
     lastName: this.lastName || ''
   };
 };
+
+// userSchema.methods.questionRight = function(){
+//   // moves question into list deep
+// };
+//
+// userSchema.methods.questionWrong = function(){
+//   // moves question into list once.
+// };
 
 const User = mongoose.model('User', userSchema);
 module.exports = { User };

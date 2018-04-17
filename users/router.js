@@ -3,7 +3,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const { User } = require('./models');
-
+const { Question }  = require('../questions/model.js');
+console.log(typeof Question,'==');
 const router = express.Router();
 
 const jsonParser = bodyParser.json();
@@ -50,7 +51,9 @@ router.post('/', jsonParser, (req, res) => {
   }
 
   let { username, password, firstName, lastName } = req.body;
-
+  // let questions = Question.find();
+  // console.log(questions,'questions');
+  let temp ;
   return User.find({ username })
     .count()
     .then(count => {
@@ -62,19 +65,25 @@ router.post('/', jsonParser, (req, res) => {
           location: 'username',
         });
       }
-      return User.hashPasword(password);
+      return Promise.all([User.hashPasword(password),Question.find({})]);
     })
-    .then(hash => {
+    .then((hash, questions) => {
+      // res.json(questions)
+
       return User.create({
         username,
         password: hash,
         lastName,
-        firstName,
+        firstName
+        // questions
       });
     })
+
     .then(user => {
       return res.status(201).json(user.serialize());
     })
+
+    //do populate here
     .catch(err => {
       if (err.reason === 'ValidationError') {
         return res.status(err.code).json(err);

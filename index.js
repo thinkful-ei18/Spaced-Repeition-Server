@@ -41,6 +41,13 @@ app.get('/api/dashboard', jwtAuth, (req, res) => {
   });
 });
 
+
+app.use(function (req, res, next) {
+  const err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
+
 function runServer(port = PORT) {
   const server = app
     .listen(port, () => {
