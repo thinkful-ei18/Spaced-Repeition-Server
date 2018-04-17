@@ -35,12 +35,23 @@ app.use('/api/users', usersRouter);
 app.use('/api/auth', authRouter);
 
 const jwtAuth = passport.authenticate('jwt', { session:false});
+
 app.get('/api/dashboard', jwtAuth, (req, res) => {
   return res.json({
     data: 'we will learn Spanish!'
   });
 });
+//move to module
+const {User} = require('./users/models.js');
+app.get('/api/dash/question', jwtAuth, (req, res, next) => {
+  console.log(req.user,'test');
+  User.findById(req.user.id)
+    .select('questions')
+    .then((questions) => {
+      res.json(questions[0]);
+    });
 
+});
 
 app.use(function (req, res, next) {
   const err = new Error('Not Found');

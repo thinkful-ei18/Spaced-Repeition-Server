@@ -7,7 +7,23 @@ const { Question }  = require('../questions/model.js');
 const router = express.Router();
 
 const jsonParser = bodyParser.json();
+router.get('/question',(req, res, next) => {
+  //get the id
+  // const id = 3;
+  // console.log(req.user.id,'id is ')
+  // const userId = req.user.id;
+  // console.log(req,'user id is ');
+  // const {id} = req.user;
+  console.log(req.user, 'the id ');
+  // console.log('hello');
+  // User.findById(req.user.id)
+  //   .select('questions')
+  //   .then((questions) => {
+  //     console.log('in',questions);
+  //   });
 
+
+});
 router.post('/', jsonParser, (req, res) => {
   const requiredFields = ['username', 'password'];
   const missingField = requiredFields.find(field => !(field in req.body));
