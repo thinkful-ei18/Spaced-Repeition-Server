@@ -1,0 +1,51 @@
+[
+  {
+    "englishWord":"Hello",
+    "spanishWord":"Hola"
+  },
+  {
+    "englishWord":"Red",
+    "spanishWord":"Rojo"
+  },
+  {
+    "englishWord":"Blue",
+    "spanishWord":"Azul"
+  },
+  {
+    "englishWord":"Verde",
+    "spanishWord":"Green"
+  },
+  {
+    "englishWord":"Amarillo",
+    "spanishWord":"Yellow"
+  },
+  {
+    "englishWord":"Chicken",
+    "spanishWord":"Pollo"
+  },
+  {
+    "englishWord":"Dog",
+    "spanishWord":"Perro"
+  },
+  {
+    "englishWord":"Cat",
+    "spanishWord":"Gato"
+  },
+  {
+    "englishWord":"City",
+    "spanishWord":"Ciudad"
+  },
+  {
+    "englishWord":"Library",
+    "spanishWord":"Biblioteca"
+  },
+  {
+    "englishWord":"Beach",
+    "spanishWord":"Playa"
+  },
+
+
+
+
+
+]
