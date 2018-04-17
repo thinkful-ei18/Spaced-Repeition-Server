@@ -3,13 +3,13 @@
 const mongoose = require('mongoose');
 
 // simple
-const questionScheema = mongoose.Scheema({
+const questionSchema = mongoose.Schema({
   spanishWord:{ type:String },
   englishWord:{ type:String }
 });
 
 
-questionScheema.methods.serialize = function(){
+questionSchema.methods.serialize = function(){
   return{
     id: this._id,
     spanishWord: this.spanishWord ,
@@ -18,5 +18,5 @@ questionScheema.methods.serialize = function(){
   };
 };
 
-const Question = mongoose.model('Question',questionScheema);
+const Question = mongoose.model('Question',questionSchema);
 module.exports = Question;
