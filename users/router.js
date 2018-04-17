@@ -4,7 +4,6 @@ const bodyParser = require('body-parser');
 
 const { User } = require('./models');
 const { Question }  = require('../questions/model.js');
-console.log(typeof Question,'==');
 const router = express.Router();
 
 const jsonParser = bodyParser.json();
@@ -51,31 +50,33 @@ router.post('/', jsonParser, (req, res) => {
   }
 
   let { username, password, firstName, lastName } = req.body;
-  // let questions = Question.find();
-  // console.log(questions,'questions');
-  let temp ;
-  return User.find({ username })
-    .count()
-    .then(count => {
-      if (count > 0) {
-        return Promise.reject({
-          code: 422,
-          reason: 'ValidationError',
-          message: 'Username taken',
-          location: 'username',
-        });
-      }
-      return Promise.all([User.hashPasword(password),Question.find({})]);
+  let questions;
+  return Question.find()
+    .then(res => {
+      questions = res;
     })
-    .then((hash, questions) => {
-      // res.json(questions)
-
+    .then(() =>
+      User.find({ username })
+        .count()
+        .then(count => {
+          if (count > 0) {
+            return Promise.reject({
+              code: 422,
+              reason: 'ValidationError',
+              message: 'Username taken',
+              location: 'username',
+            });
+          }
+        })
+    )
+    .then(() => User.hashPasword(password))
+    .then(hash => {
       return User.create({
         username,
         password: hash,
         lastName,
-        firstName
-        // questions
+        firstName,
+        questions,
       });
     })
 
