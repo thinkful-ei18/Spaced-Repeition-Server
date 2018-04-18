@@ -54,8 +54,8 @@ router.post('/', jsonParser, (req, res) => {
     let QuestionsSLL = new LinkedList();
     return Question.find()
     .then(questions => {
-       questions.forEach((question) =>{
-           QuestionsSLL.insertLast({
+        questions.forEach((question) =>{
+          QuestionsSLL.insertLast({
                wordPair:{
                    "englishWord":question.englishWord,
                    "spanishWord":question.spanishWord
@@ -93,7 +93,7 @@ router.post('/', jsonParser, (req, res) => {
     .then(user => {
       return res.status(201).json(user.serialize());
     })
-    .catch(err => {
+    .catch(err => {;
       if (err.reason === 'ValidationError') {
         return res.status(err.code).json(err);
       }
