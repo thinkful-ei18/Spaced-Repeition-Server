@@ -2,11 +2,13 @@
 
 class _Node {
   constructor(data, next) {
-    (this.data = data), (this.next = next);
+      this.data = data,
+      this.next = next
   }
 }
 
 class LinkedList {
+
   constructor() {
     this.head = null;
   }
@@ -18,7 +20,8 @@ class LinkedList {
   insertLast(item) {
     if (this.head === null) {
       this.insertFirst(item);
-    } else {
+    }
+    else {
       let tempNode = this.head;
       while (tempNode.next !== null) {
         tempNode = tempNode.next;
@@ -26,6 +29,7 @@ class LinkedList {
       tempNode.next = new _Node(item, null);
     }
   }
+
   /**Inserts a new node after a node containing the key.*/
   insertAfter(key, itemToInsert) {
     let tempNode = this.head;
@@ -36,6 +40,7 @@ class LinkedList {
       tempNode.next = new _Node(itemToInsert, tempNode.next);
     }
   }
+
   /* Inserts a new node before a node containing the key.*/
   insertBefore(key, itemToInsert) {
     if (this.head == null) {
@@ -58,6 +63,7 @@ class LinkedList {
     //insert between current and previous
     prevNode.next = new _Node(itemToInsert, currNode);
   }
+
   insertAt(nthPosition, itemToInsert) {
     if (nthPosition < 0) {
       throw new Error('Position error');
@@ -72,6 +78,7 @@ class LinkedList {
       node.next = newNode;
     }
   }
+
   _findNthElement(position) {
     let node = this.head;
     for (let i = 0; i < position; i++) {
@@ -79,6 +86,7 @@ class LinkedList {
     }
     return node;
   }
+
   remove(item) {
     //if the list is empty
     if (!this.head) {
@@ -93,7 +101,7 @@ class LinkedList {
     let currNode = this.head;
     //keep track of previous
     let previousNode = this.head;
-    while (currNode !== null && currNode.value !== item) {
+    while ((currNode !== null) && (currNode.value !== item)) {
       //save the previous node
       previousNode = currNode;
       currNode = currNode.next;
@@ -104,8 +112,8 @@ class LinkedList {
     }
     previousNode.next = currNode.next;
   }
-  find(item) {
-    //get
+
+  find(item) { //get
     //start at the head
     let currNode = this.head;
     //if the list is empty
@@ -117,7 +125,8 @@ class LinkedList {
       // and the item is not on the list
       if (currNode.next === null) {
         return null;
-      } else {
+      }
+      else {
         //keep looking
         currNode = currNode.next;
       }
@@ -125,15 +134,17 @@ class LinkedList {
     //found it
     return currNode;
   }
+
   removeHead() {
-    return (this.head = this.head.next);
+    return this.head = this.head.next;
   }
+
   setM() {
     let currentQuestion = this.head;
-    currentQuestion.data.mValue = currentQuestion.data.mValue * 2;
     this.removeHead();
+    currentQuestion.data.mValue = currentQuestion.data.mValue * 2;
+    return this.insertAt(currentQuestion.data.mValue, currentQuestion.data);
 
-    return this.insertAt(currentQuestion.data.mValue, currentQuestion);
   }
 }
 

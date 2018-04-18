@@ -32,37 +32,24 @@ router.get('/', jwtAuth, (req, res, next) => {
 router.get('/correct', jwtAuth, (req, res, next) => {
   const userId = req.user.id;
   User.findById(userId)
-    // .select('questions')
+    .select('questions')
     .then(result => {
-      console.log(result);
+      // console.log(result);
       let tempList = new LinkedList();
       let tempPointer = result.questions.head;
       while (tempPointer !== null) {
         tempList.insertLast(tempPointer.data);
         tempPointer = tempPointer.next;
       }
-      // tempList.setM();
-      console.log(tempPointer, 'this is the original');
-
-      let newObj = Object.assign({}, result, {
-        questions: tempList,
+      tempList.setM();
+      return User.updateOne(
+        { _id: userId },
+        { $set: { questions: tempList } }
+      ).then(data => {
+        res.status(204).json(data);
       });
-
-      console.log('temp is here:', tempList);
-      return User.findByIdAndUpdate(
-        userId,
-        { $set: { questions: tempList } },
-        { new: true }
-      )
-        .then(data => {
-          console.log('data is here', data);
-          return res.status(201).json(data);
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      res.status(204).json('we did it');
     })
-    // .then(res=> res.status(201).json(res))
     .catch(err => next(err));
 });
 router.get('/wrong', (req, res, next) => {});
