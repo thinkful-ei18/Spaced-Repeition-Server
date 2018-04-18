@@ -4,6 +4,8 @@ const { Question } = require('../models/questions.js');
 const { User } = require('../models/users.js');
 const seedData = require('../mockData/mockWords.json');
 const passport = require('passport');
+const LinkedList = require('../linkedList/linkedList.js');
+
 
 const router = express.Router();
 
@@ -29,13 +31,25 @@ router.get('/', jwtAuth, (req, res, next) => {
 });
 
 router.get('/correct', jwtAuth, (req, res, next) => {
-  User.findById(req.user.id)
+  const userId = req.user.id
+  User.findById(userId)
     .select('questions')
     .then((result) =>{
-      console.log(result, 'onFind');
-      console.log(result.questions.head.data.mValue,'dis is the m value');
-      return res.json('testing');
+      console.log(result);
+      let tempList = new LinkedList();
+      let tempPointer = result.questions.head;
+      while (tempPointer !== null){
+        tempList.insertLast(tempPointer.data);
+        tempPointer = tempPointer.next;
+      }
+      tempList.setM();
+      console.log(tempList.head.data, 'this is the temp list');
+      User.findOneAndUpdate({_id:userId},{$set:{'firstName':'bongo'}},{new:true});
+
+      res.status(201).json('test complete');
     })
+    // .then(res=> res.status(201).json(res))
+    .catch(err => next(err));
 
 })
 router.get('/wrong', (req, res, next)=>{
