@@ -31,9 +31,8 @@ passport.use(jwtStrategy);
 
 app.use('/api/users', usersRouter);
 app.use('/api/auth', authRouter);
-
+// move past jwtAuth after seeding on live.
 app.use('/api/questions', questionRouter);
-
 const jwtAuth = passport.authenticate('jwt', { session:false});
 
 //sanity test delete me after development

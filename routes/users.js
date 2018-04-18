@@ -57,8 +57,8 @@ router.post('/', jsonParser, (req, res) => {
        questions.forEach((question) =>{
            QuestionsSLL.insertLast({
                wordPair:{
-                   "englishWord":[question.englishWord],
-                   "spanishWord":[question.spanishWord]
+                   "englishWord":question.englishWord,
+                   "spanishWord":question.spanishWord
                },
                mValue:1
            })

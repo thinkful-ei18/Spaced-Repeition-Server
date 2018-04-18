@@ -22,18 +22,20 @@ const jwtAuth = passport.authenticate('jwt', { session:false});
 
 router.get('/', jwtAuth, (req, res, next) => {
   User.findById(req.user.id)
-      .select('questions')
-      .then((result) => {
-         return res.json(result.questions.head.data.wordPair);
-      });
+    .select('questions')
+    .then((result) => {
+      return res.json(result.questions.head.data.wordPair);
+    });
 });
 
 router.get('/correct', jwtAuth, (req, res, next) => {
   User.findById(req.user.id)
-      .select('questions')
-      .then((result) =>{
-
-      })
+    .select('questions')
+    .then((result) =>{
+      console.log(result, 'onFind');
+      console.log(result.questions.head.data.mValue,'dis is the m value');
+      return res.json('testing');
+    })
 
 })
 router.get('/wrong', (req, res, next)=>{
