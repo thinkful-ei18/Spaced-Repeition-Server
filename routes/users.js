@@ -3,9 +3,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const router = express.Router();
 const { User } = require('../models/users.js');
-const { Question }  = require('../models/questions.js');
+const { Question } = require('../models/questions.js');
 const LinkedList = require('../linkedList/linkedList.js');
-
 
 const jsonParser = bodyParser.json();
 
@@ -41,7 +40,7 @@ router.post('/', jsonParser, (req, res) => {
     field => req.body[field].trim() !== req.body[field]
   );
 
-  if ( nonTrimmedField ) {
+  if (nonTrimmedField) {
     return res.status(422).json({
       code: 422,
       reason: 'ValidationError',
@@ -51,20 +50,21 @@ router.post('/', jsonParser, (req, res) => {
   }
 
   let { username, password, firstName, lastName } = req.body;
-    let QuestionsSLL = new LinkedList();
-    return Question.find()
+  let QuestionsSLL = new LinkedList();
+  return Question.find()
     .then(questions => {
-        questions.forEach((question) =>{
-          QuestionsSLL.insertLast({
-               wordPair:{
-                   "englishWord":question.englishWord,
-                   "spanishWord":question.spanishWord
-               },
-               mValue:1
-           })
-       })
+      questions.forEach(question => {
+        QuestionsSLL.insertLast({
+          wordPair: {
+            englishWord: question.englishWord,
+            spanishWord: question.spanishWord,
+          },
+          mValue: 1,
+        });
+      });
+      console.log(JSON.stringify(QuestionsSLL));
     })
-    .then(() =>{
+    .then(() => {
       User.find({ username })
         .count()
         .then(count => {
@@ -76,10 +76,10 @@ router.post('/', jsonParser, (req, res) => {
               location: 'username',
             });
           }
-        })
+        });
     })
     .then(() => {
-        return User.hashPassword(password)
+      return User.hashPassword(password);
     })
     .then(hash => {
       return User.create({
@@ -87,13 +87,13 @@ router.post('/', jsonParser, (req, res) => {
         password: hash,
         lastName,
         firstName,
-        questions:QuestionsSLL
+        questions: QuestionsSLL,
       });
     })
     .then(user => {
       return res.status(201).json(user.serialize());
     })
-    .catch(err => {;
+    .catch(err => {
       if (err.reason === 'ValidationError') {
         return res.status(err.code).json(err);
       }
