@@ -122,18 +122,19 @@ class LinkedList {
         currNode = currNode.next;
       }
     }
-    
-    removeHead(){
-      return this.head = this.head.next;
-    }
-    setM(){
-      let currentQuestion = this.head;
-      currentQuestion.data.mValue = currentQuestion.data.mValue * 2;
-      this.removeHead();
+    //found it
+    return currNode;
+  }
+  removeHead() {
+    return (this.head = this.head.next);
+  }
+  setM() {
+    let currentQuestion = this.head;
+    currentQuestion.data.mValue = currentQuestion.data.mValue * 2;
+    this.removeHead();
 
-      return this.insertAt(currentQuestion.data.mValue, currentQuestion);
-
-    }
+    return this.insertAt(currentQuestion.data.mValue, currentQuestion);
+  }
 }
 
 module.exports = LinkedList;
