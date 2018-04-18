@@ -21,13 +21,22 @@ router.get('/seed', (req, res) => {
 const jwtAuth = passport.authenticate('jwt', { session:false});
 
 router.get('/', jwtAuth, (req, res, next) => {
-  console.log(req.user,'test');
-  console.log(req.user.id,'id');
   User.findById(req.user.id)
-    .select('questions')
-    .then((questions) => {
-      res.json(questions.questions[0]);
-    });
+      .select('questions')
+      .then((result) => {
+         return res.json(result.questions.head.data.wordPair);
+      });
 });
-//post put delete ??
+
+router.get('/correct', jwtAuth, (req, res, next) => {
+  User.findById(req.user.id)
+      .select('questions')
+      .then((result) =>{
+
+      })
+
+})
+router.get('/wrong', (req, res, next)=>{
+
+})
 module.exports = { router };

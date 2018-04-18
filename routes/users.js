@@ -8,10 +8,7 @@ const LinkedList = require('../linkedList/linkedList.js');
 
 
 const jsonParser = bodyParser.json();
-// router.get('/question',(req, res, next) => {
-//
-//
-// });
+
 router.post('/', jsonParser, (req, res) => {
   const requiredFields = ['username', 'password'];
   const missingField = requiredFields.find(field => !(field in req.body));
@@ -54,7 +51,6 @@ router.post('/', jsonParser, (req, res) => {
   }
 
   let { username, password, firstName, lastName } = req.body;
-    let questions = [];
     let QuestionsSLL = new LinkedList();
     return Question.find()
     .then(questions => {
@@ -67,10 +63,8 @@ router.post('/', jsonParser, (req, res) => {
                mValue:1
            })
        })
-
     })
     .then(() =>{
-        console.log(typeof QuestionsSLL,'wek');
       User.find({ username })
         .count()
         .then(count => {
