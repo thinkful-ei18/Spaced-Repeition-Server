@@ -1,46 +1,47 @@
 [
   {
+    id
     "englishWord":"Hello",
-    "spanishWord":"Hola"
+    "spanishWord":"hola"
   },
   {
     "englishWord":"Red",
-    "spanishWord":"Rojo"
+    "spanishWord":"rojo"
   },
   {
     "englishWord":"Blue",
-    "spanishWord":"Azul"
+    "spanishWord":"azul"
   },
   {
-    "englishWord":"Verde",
-    "spanishWord":"Green"
+    "englishWord":"Green",
+    "spanishWord":"verde"
   },
   {
-    "englishWord":"Amarillo",
-    "spanishWord":"Yellow"
+    "englishWord":"Yellow",
+    "spanishWord":"amarillo"
   },
   {
     "englishWord":"Chicken",
-    "spanishWord":"Pollo"
+    "spanishWord":"pollo"
   },
   {
     "englishWord":"Dog",
-    "spanishWord":"Perro"
+    "spanishWord":"perro"
   },
   {
     "englishWord":"Cat",
-    "spanishWord":"Gato"
+    "spanishWord":"gato"
   },
   {
     "englishWord":"City",
-    "spanishWord":"Ciudad"
+    "spanishWord":"ciudad"
   },
   {
     "englishWord":"Library",
-    "spanishWord":"Biblioteca"
+    "spanishWord":"biblioteca"
   },
   {
     "englishWord":"Beach",
-    "spanishWord":"Playa"
+    "spanishWord":"playa"
   }
 ]

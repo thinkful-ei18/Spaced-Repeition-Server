@@ -2,7 +2,6 @@
 
 const mongoose = require('mongoose');
 
-// simple
 const questionSchema = mongoose.Schema({
   spanishWord:{ type:String },
   englishWord:{ type:String }

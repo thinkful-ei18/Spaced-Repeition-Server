@@ -2,28 +2,15 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const { User } = require('./models');
-const { Question }  = require('../questions/model.js');
+const { User } = require('../models/users.js');
+const { Question }  = require('../models/questions.js');
 const router = express.Router();
 
 const jsonParser = bodyParser.json();
-router.get('/question',(req, res, next) => {
-  //get the id
-  // const id = 3;
-  // console.log(req.user.id,'id is ')
-  // const userId = req.user.id;
-  // console.log(req,'user id is ');
-  // const {id} = req.user;
-  console.log(req.user, 'the id ');
-  // console.log('hello');
-  // User.findById(req.user.id)
-  //   .select('questions')
-  //   .then((questions) => {
-  //     console.log('in',questions);
-  //   });
-
-
-});
+// router.get('/question',(req, res, next) => {
+//
+//
+// });
 router.post('/', jsonParser, (req, res) => {
   const requiredFields = ['username', 'password'];
   const missingField = requiredFields.find(field => !(field in req.body));
@@ -31,7 +18,7 @@ router.post('/', jsonParser, (req, res) => {
   if (missingField) {
     return res.status(422).json({
       code: 422,
-      reqson: 'ValidationError',
+      reason: 'ValidationError',
       message: 'MissingField',
       location: missingField,
     });
@@ -45,31 +32,32 @@ router.post('/', jsonParser, (req, res) => {
   if (nonStringField) {
     return res.status(422).json({
       code: 422,
-      reqson: 'ValidationError',
+      reason: 'ValidationError',
       message: 'Incorrect Type',
       location: nonStringField,
     });
   }
 
   const explicitTrimmedFields = ['username', 'password'];
-  const nonTrimmedFeild = explicitTrimmedFields.find(
+  const nonTrimmedField = explicitTrimmedFields.find(
     field => req.body[field].trim() !== req.body[field]
   );
 
-  if (nonTrimmedFeild) {
+  if ( nonTrimmedField ) {
     return res.status(422).json({
       code: 422,
-      reqson: 'ValidationError',
+      reason: 'ValidationError',
       message: 'Cannot start or end with whitespace',
-      location: nonTrimmedFeild,
+      location: nonTrimmedField,
     });
   }
 
   let { username, password, firstName, lastName } = req.body;
-  let questions;
+  let questions = [];
   return Question.find()
     .then(res => {
-      questions = res;
+      return questions = res;
+
     })
     .then(() =>
       User.find({ username })
@@ -85,7 +73,7 @@ router.post('/', jsonParser, (req, res) => {
           }
         })
     )
-    .then(() => User.hashPasword(password))
+    .then(() => User.hashPassword(password))
     .then(hash => {
       return User.create({
         username,
@@ -95,12 +83,9 @@ router.post('/', jsonParser, (req, res) => {
         questions,
       });
     })
-
     .then(user => {
       return res.status(201).json(user.serialize());
     })
-
-    //do populate here
     .catch(err => {
       if (err.reason === 'ValidationError') {
         return res.status(err.code).json(err);

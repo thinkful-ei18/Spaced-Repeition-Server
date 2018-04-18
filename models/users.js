@@ -20,9 +20,7 @@ const userSchema = mongoose.Schema({
   lastName: {
     type: String,
   },
-  questions: {
-    type: Array,
-  },
+  questions:[]
 });
 
 userSchema.methods.validatePassword = function(password) {
