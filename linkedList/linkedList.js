@@ -133,10 +133,14 @@ class LinkedList {
     }
     setM(){
       let currentQuestion = this.head;
-      currentQuestion.data.mValue = currentQuestion.data.mValue * 2;
+      console.log('currentQuestion', currentQuestion);
       this.removeHead();
+      console.log('removing the head', currentQuestion);
 
-      return this.insertAt(currentQuestion.data.mValue, currentQuestion);
+      currentQuestion.data.mValue = currentQuestion.data.mValue * 2;
+      // this.removeHead();
+      //
+      return this.insertAt(currentQuestion.data.mValue, currentQuestion.data);
 
     }
 }

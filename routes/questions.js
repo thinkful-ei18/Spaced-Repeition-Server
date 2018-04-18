@@ -35,7 +35,7 @@ router.get('/correct', jwtAuth, (req, res, next) => {
   User.findById(userId)
     .select('questions')
     .then((result) =>{
-      console.log(result);
+      // console.log(result);
       let tempList = new LinkedList();
       let tempPointer = result.questions.head;
       while (tempPointer !== null){
@@ -43,11 +43,24 @@ router.get('/correct', jwtAuth, (req, res, next) => {
         tempPointer = tempPointer.next;
       }
       tempList.setM();
-      console.log(tempList.head.data, 'this is the temp list');
-      User.findOneAndUpdate({_id:userId},{$set:{'firstName':'bongo'}},{new:true});
+      const newQuestions = {
+        questions:tempList
+      }
+      // let tempCurr = tempList.head;
+      // while(tempCurr!==null){
+      //   console.log(tempCurr.data,'data!');
+      //   console.log(tempCurr.next,'next!');
+      //   tempCurr= tempCurr.next;
+      // }
 
-      res.status(201).json('test complete');
+      // return User.findByIdAndUpdate(userId, newQuestions, {new:true})
+        return User.updateOne({_id:userId}, {$set: {'questions':tempList}})
+        .then(data=>{
+          res.status(204).json(data);
+        })
+      res.status(204).json('we did it')
     })
+
     // .then(res=> res.status(201).json(res))
     .catch(err => next(err));
 
