@@ -43,25 +43,12 @@ router.get('/correct', jwtAuth, (req, res, next) => {
         tempPointer = tempPointer.next;
       }
       tempList.setM();
-      const newQuestions = {
-        questions:tempList
-      }
-      // let tempCurr = tempList.head;
-      // while(tempCurr!==null){
-      //   console.log(tempCurr.data,'data!');
-      //   console.log(tempCurr.next,'next!');
-      //   tempCurr= tempCurr.next;
-      // }
-
-      // return User.findByIdAndUpdate(userId, newQuestions, {new:true})
         return User.updateOne({_id:userId}, {$set: {'questions':tempList}})
         .then(data=>{
           res.status(204).json(data);
         })
       res.status(204).json('we did it')
     })
-
-    // .then(res=> res.status(201).json(res))
     .catch(err => next(err));
 
 })
