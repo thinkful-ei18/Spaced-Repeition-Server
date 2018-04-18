@@ -6,7 +6,6 @@ class _Node {
       this.next = next
   }
 }
-
 class LinkedList {
 
   constructor() {
@@ -82,6 +81,9 @@ class LinkedList {
   _findNthElement(position) {
     let node = this.head;
     for (let i = 0; i < position; i++) {
+      if(node.next === null){
+        return node;
+      }
       node = node.next;
     }
     return node;
@@ -139,10 +141,16 @@ class LinkedList {
     return this.head = this.head.next;
   }
 
-  setM() {
+  setM(wasCorrect) {
     let currentQuestion = this.head;
+    if(wasCorrect === true){
+      currentQuestion.data.mValue = currentQuestion.data.mValue * 2;
+    }
+    else{
+      currentQuestion.data.mValue = 1;
+    }
     this.removeHead();
-    currentQuestion.data.mValue = currentQuestion.data.mValue * 2;
+
     return this.insertAt(currentQuestion.data.mValue, currentQuestion.data);
 
   }
