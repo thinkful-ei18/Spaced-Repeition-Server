@@ -1,10 +1,11 @@
 'use strict';
 const express = require('express');
 const bodyParser = require('body-parser');
-
+const router = express.Router();
 const { User } = require('../models/users.js');
 const { Question }  = require('../models/questions.js');
-const router = express.Router();
+const LinkedList = require('../linkedList/linkedList.js');
+
 
 const jsonParser = bodyParser.json();
 // router.get('/question',(req, res, next) => {
@@ -53,13 +54,23 @@ router.post('/', jsonParser, (req, res) => {
   }
 
   let { username, password, firstName, lastName } = req.body;
-  let questions = [];
-  return Question.find()
-    .then(res => {
-      return questions = res;
+    let questions = [];
+    let QuestionsSLL = new LinkedList();
+    return Question.find()
+    .then(questions => {
+       questions.forEach((question) =>{
+           QuestionsSLL.insertLast({
+               wordPair:{
+                   "englishWord":[question.englishWord],
+                   "spanishWord":[question.spanishWord]
+               },
+               mValue:1
+           })
+       })
 
     })
-    .then(() =>
+    .then(() =>{
+        console.log(typeof QuestionsSLL,'wek');
       User.find({ username })
         .count()
         .then(count => {
@@ -72,15 +83,17 @@ router.post('/', jsonParser, (req, res) => {
             });
           }
         })
-    )
-    .then(() => User.hashPassword(password))
+    })
+    .then(() => {
+        return User.hashPassword(password)
+    })
     .then(hash => {
       return User.create({
         username,
         password: hash,
         lastName,
         firstName,
-        questions,
+        questions:QuestionsSLL
       });
     })
     .then(user => {

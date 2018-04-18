@@ -20,14 +20,16 @@ const userSchema = mongoose.Schema({
   lastName: {
     type: String,
   },
-  questions:[]
+  questions:{
+    type:Object
+  }
 });
 
 userSchema.methods.validatePassword = function(password) {
   return bcrypt.compare(password, this.password);
 };
 
-userSchema.statics.hashPasword = function(password) {
+userSchema.statics.hashPassword = function(password) {
   return bcrypt.hash(password, 10);
 };
 
@@ -40,13 +42,7 @@ userSchema.methods.serialize = function() {
   };
 };
 
-// userSchema.methods.questionRight = function(){
-//   // moves question into list deep
-// };
-//
-// userSchema.methods.questionWrong = function(){
-//   // moves question into list once.
-// };
+
 
 const User = mongoose.model('User', userSchema);
 module.exports = { User };
