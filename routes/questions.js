@@ -6,7 +6,6 @@ const seedData = require('../mockData/mockWords.json');
 const passport = require('passport');
 const LinkedList = require('../linkedList/linkedList.js');
 
-
 const router = express.Router();
 
 // seeding the database !
@@ -20,39 +19,51 @@ router.get('/seed', (req, res) => {
     });
 });
 
-const jwtAuth = passport.authenticate('jwt', { session:false});
+const jwtAuth = passport.authenticate('jwt', { session: false });
 
 router.get('/', jwtAuth, (req, res, next) => {
   User.findById(req.user.id)
     .select('questions')
-    .then((result) => {
+    .then(result => {
       return res.json(result.questions.head.data.wordPair);
     });
 });
 
 router.get('/correct', jwtAuth, (req, res, next) => {
-  const userId = req.user.id
+  const userId = req.user.id;
   User.findById(userId)
-    .select('questions')
-    .then((result) =>{
+    // .select('questions')
+    .then(result => {
       console.log(result);
       let tempList = new LinkedList();
       let tempPointer = result.questions.head;
-      while (tempPointer !== null){
+      while (tempPointer !== null) {
         tempList.insertLast(tempPointer.data);
         tempPointer = tempPointer.next;
       }
-      tempList.setM();
-      console.log(tempList.head.data, 'this is the temp list');
-      User.findOneAndUpdate({_id:userId},{$set:{'firstName':'bongo'}},{new:true});
+      // tempList.setM();
+      console.log(tempPointer, 'this is the original');
 
-      res.status(201).json('test complete');
+      let newObj = Object.assign({}, result, {
+        questions: tempList,
+      });
+
+      console.log('temp is here:', tempList);
+      return User.findByIdAndUpdate(
+        userId,
+        { $set: { questions: tempList } },
+        { new: true }
+      )
+        .then(data => {
+          console.log('data is here', data);
+          return res.status(201).json(data);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     })
     // .then(res=> res.status(201).json(res))
     .catch(err => next(err));
-
-})
-router.get('/wrong', (req, res, next)=>{
-
-})
+});
+router.get('/wrong', (req, res, next) => {});
 module.exports = { router };
