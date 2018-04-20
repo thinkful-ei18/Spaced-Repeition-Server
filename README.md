@@ -1,7 +1,7 @@
 ## Spanglish App
 This app aims to teach an individual the words of the spanish language. It utilizes a linked list algorithim to display words based on the amount of times the user answered wrong or right. The algorithim results in a great learning experience. This is an example of a Spaced-Repetition Algorithim.
 
-- Live App Here: https://silly-pasteur-c433d2.netlify.com/
+- Live App Here: https://infallible-hopper-95d175.netlify.com/
 
 ## Technology Stack
 
